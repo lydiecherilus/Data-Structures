@@ -13,16 +13,59 @@ return elements in First In First Out order.
 Stretch: What if you could only use instances of your Stack class to implement the Queue?
          What would that look like? How many Stacks would you need? Try it!
 """
+# 1. Implement the Queue class using an array as the underlying storage structure.
+# class Queue:
+#     def __init__(self):
+#         self.size = 0
+#         self.storage = []
+    
+#     def __len__(self):
+#         return len(self.storage)
+
+#     def enqueue(self, value):
+#         self.storage.append(value)
+
+#     def dequeue(self):
+#         if len(self) == 0:
+#             return None
+#         dequeue = self.storage[0]
+#         self.storage.pop(0)
+#         return dequeue
+
+# 2. Re-implement the Queue class, this time using the linked list implementation as the underlying storage structure.
+class Node: 
+    def __init__(self, value=None, next_node=None):
+        self.value = value
+        self.next_node = next_node
+ 
+
 class Queue:
     def __init__(self):
         self.size = 0
-        # self.storage = ?
+        self.head = None
     
     def __len__(self):
-        pass
+        return self.size
 
     def enqueue(self, value):
-        pass
+        self.size += 1
+        new_node = Node(value)
+        if self.head == None:
+            self.head = new_node
+            return 
+        current_node = self.head
+        while current_node.next_node is not None:
+            current_node = current_node.next_node
+        current_node.next_node = new_node
 
     def dequeue(self):
-        pass
+        if self.size == 0:
+            return None
+        value = self.head.value
+
+        self.head = self.head.next_node
+        self.size -= 1
+        return value
+
+#  3. What is the difference between using an array vs. a linked list when implementing a Queue?
+#  Answer - it is easier when using an array, less code.
