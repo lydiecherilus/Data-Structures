@@ -17,61 +17,41 @@ return elements in Last In First Out order.
 #         self.storage = []
 
 #     def __len__(self):
-#         return len(self.storage)
+#         return self.size
 
 #     def push(self, value):
-#         self.storage.append(value)
+#         self.size += 1
+#         self.storage.insert(0, value)
         
 #     def pop(self):
-#         if len(self) > 0:
-#             return self.storage.pop()
+#         if len(self.storage) > 0:
+#             self.size -= 1
+#             return self.storage.pop(0)
 #         else:
 #             return None
 
 # 2. Re-implement the Stack class, this time using the linked list implementation as the underlying storage structure.
-class Node: 
-    def __init__(self, value=None, next_node=None):
-        self.value = value
-        self.next_node = next_node
- 
+from singly_linked_list import LinkedList
 
 class Stack: 
     def __init__(self):
         self.size = 0
-        self.head = None 
-        self.tail = None 
+        self.storage = LinkedList()
 
     def __len__(self):
         return self.size
 
     def push(self, value):
         self.size += 1
-        new_node = Node(value)
+        self.storage.add_to_head(value)
 
-        if self.head is None:
-            self.head = new_node
-            self.tail = new_node
-            return 
-        self.tail.next_node = new_node
-        self.tail = new_node
-        
     def pop(self):
         if self.size == 0:
             return None
-        pop_node = self.tail
-        current_node = self.head
-
-        if pop_node is not current_node:
-            while current_node.next_node is not pop_node:
-                current_node = current_node.next_node
-
-        current_node.next_node = None
-        self.tail = current_node
-        self.size -= 1
-
-        if self.size == 0:
-            self.head = None
-        return pop_node.value
+        else: 
+            self.size -= 1
+            return self.storage.remove_head()
 
     # 3. What is the difference between using an array vs. a linked list when implementing a Stack?
-    # Answer - it is easier when using an array, less code.
+    # Answer - it seems to be easier and less code when using an array at first but after importing LinkedList from singly_linked_list and used it,
+    # the implementing with a linked list is way simpler and more efficient.
